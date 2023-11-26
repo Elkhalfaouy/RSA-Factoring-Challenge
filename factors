@@ -1,45 +1,38 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
+""" Factor numbers """
+from sys import argv
+from math import sqrt
 
-import math
-import sys
 
-def factorize(n):
-    factors = []
+def open_read_file(file_name):
+    """read from file
+    add to array
+    """
+    with open(file_name, "r", encoding="utf-8") as file:
+        lines = file.readlines()
+    number_to_factor = []
+    for line in lines:
+        number_to_factor.append(int(line))
+    return number_to_factor
 
-for i in range(2, int(math.sqrt(n)) + 1):
-    if n % i == 0:
-        factors.append(i)
-        n = n / i
-        # You can add more code here if needed
 
-# Rest of your code outside the loop
+def find_and_times(n):
+    """factor each
+    n given
+    """
+    for i in range(1, n):
+        if n == ((n // i) * i):
+            print("{}={}*{}".format(n, (n // i), i))
+            break
 
-            if n % i == 0:
-                factors.append(i)
-            else:
-                break
-    if n > 1:
-        factors.append(n)
-    return factors
 
-def main():
-    if len(sys.argv) != 2:
-        print("Usage: python factors.py <file>")
-        exit(1)
+def fac_list(ls):
+    """factor each
+    num in ls
+    """
+    for i in ls:
+        find_and_times(i)
 
-    with open(sys.argv[1], "r") as f:
-        data = f.readlines()
 
-    for line in data:
-        n = int(line.strip())
-        if n < 2:
-            print(f"Error: {n} is not a natural number")
-        else:
-            factors = factorize(n)
-            if len(factors) == 1 and factors[0] == n:
-                print(f"{n}={n}")
-            else:
-                print(f"{n}=*".join(str(factor) for factor in factors))
-
-if __name__ == "__main__":
-    main()
+if len(argv) == 2:
+    fac_list(open_read_file(argv[1]))
